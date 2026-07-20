@@ -1,9 +1,12 @@
 from django.shortcuts import render , get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse_lazy
+from django.db.models import Avg
+from .models import Book, Review
+from .forms import BookForm, ReviewForm
 
-from books.forms import ReviewForm
-from books.models import Book
 # Create your views here.
 
 def book_list(request):
@@ -34,4 +37,14 @@ def add_book(request,pk):
             review.user = request.user
             review.save()
             return redirect('book_details', pk=book.pk)
+        return render(request, 'books/add_book.html', {'form': form, 'book': book})
     
+class BookCreateView(LoginRequiredMixin, CreateView):
+    model = Book
+    form_class = BookForm
+    template_name = 'books/add_book.html'
+    success_url = reverse_lazy('book_list')
+
+    def form_valid(self, form):
+        form.instance.added_by = self.request.user
+        return super().form_valid(form)

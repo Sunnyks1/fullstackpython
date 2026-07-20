@@ -1,0 +1,14 @@
+{% extend 'base.html' %}
+{% block title %}Write A Review{% endblock %}
+{% block content %}
+    <h1>Review: {{book.title}}</h1>
+    <p>by {{book.author}}</p>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as._p }}
+        <button class="btn" type="submit">Submit Review</button>
+        <a href="{% url 'book_detail' book.pk}" style="margin-left:10px;">Cancle</a>"
+    </form>
+{% endblock %}
+

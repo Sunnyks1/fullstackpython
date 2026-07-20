@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}All Books{% endblock %}
+{% block coontent %}
+    <h1>All Books</h1>
+    {% if user.is_authenticated %}
+        <a class="btn" href="{% url 'book_add' %}">+ Add New Book</a>
+    {% endif %}
+
+    <br><br>
+    {% if books %}
+        <div class="book-list">
+            {% for book in books %}
+                 <div class="book-card">
+                    {% if book.cover %}
+                         <img src="{{book.cover.url}}" alt="{{book.title}} cover">
+                    {% endif %}
+                    <h3>{{book.title}}</h3>
+                    <p>by {{book.author}}</p>
+                    {% if book.avg_rating %}
+                       <p>{{ book.avg_rating|floatingformat:1}}</p>
+                    {% else %}
+                         <p>No reviews yet</p>
+                    {% elseif %}
+                     <a href="{% url 'book_detail' book.pk %}">view Details</a>
+                </div>
+            {% endfor %}
+         </div>
+    {% else %}
+         <p>No books added yet Be the first!</p>
+    {% endif %}
+{% endblock %}
