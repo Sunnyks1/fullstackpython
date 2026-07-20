@@ -17,10 +17,10 @@
                     <h3>{{book.title}}</h3>
                     <p>by {{book.author}}</p>
                     {% if book.avg_rating %}
-                       <p>{{ book.avg_rating|floatingformat:1}}</p>
+                       <p>{{ book.avg_rating|floatformat:1}}</p>
                     {% else %}
                          <p>No reviews yet</p>
-                    {% elseif %}
+                    {% endif %}
                      <a href="{% url 'book_detail' book.pk %}">view Details</a>
                 </div>
             {% endfor %}

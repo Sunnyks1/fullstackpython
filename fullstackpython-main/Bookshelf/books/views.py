@@ -27,7 +27,7 @@ def book_details(request, pk):
 
 
 @login_required
-def add_book(request,pk):
+def add_review(request,pk):
     book = get_object_or_404(Book, pk=pk)
     form = ReviewForm(request.POST or None)
     if request.method == 'POST':
@@ -37,7 +37,7 @@ def add_book(request,pk):
             review.user = request.user
             review.save()
             return redirect('book_details', pk=book.pk)
-        return render(request, 'books/add_book.html', {'form': form, 'book': book})
+        return render(request, 'books/add_review.html', {'form': form, 'book': book})
     
 class BookCreateView(LoginRequiredMixin, CreateView):
     model = Book
